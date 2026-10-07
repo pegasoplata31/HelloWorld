@@ -1,6 +1,7 @@
 """Prepare the generated Android platform and decode the bundled source asset."""
 import base64
 import hashlib
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -31,3 +32,20 @@ for key, value in [("compileSdk", 36), ("targetSdk", 34), ("minSdk", 23)]:
         raise RuntimeError(f"No se pudo configurar {key}")
 gradle.write_text(content)
 shutil.copyfile(root / "tool/AndroidManifest.xml", android / "app/src/main/AndroidManifest.xml")
+
+# file_picker 8.x uses compileSdk 34; its lifecycle dependency requires 36.
+# Keep this configuration inside this project, including on CI runners.
+gradle_home = Path(os.environ.get("GRADLE_USER_HOME", str(root / ".gradle-build")))
+init_dir = gradle_home / "init.d"
+init_dir.mkdir(parents=True, exist_ok=True)
+(init_dir / "force-compile-sdk.gradle").write_text('''
+allprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                compileSdkVersion 36
+            }
+        }
+    }
+}
+''')

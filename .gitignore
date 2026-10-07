@@ -1,6 +1,7 @@
 .dart_tool/
 .flutter-plugins*
 build/
+.gradle-build/
 android/
 *.jks
 *.keystore

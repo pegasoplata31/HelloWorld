@@ -17,6 +17,8 @@ jobs:
     name: Compilar APK Android
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      GRADLE_USER_HOME: ${{ github.workspace }}/Guante-De-Voz-App/.gradle-build
     defaults:
       run:
         working-directory: Guante-De-Voz-App

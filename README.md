@@ -27,6 +27,7 @@ La corrección gramatical con Gemma todavía está pendiente: el modo frase conc
 Usar Flutter 3.47.6, Java 17 y el SDK de Android. Desde `Guante-De-Voz-App`:
 
 ```sh
+export GRADLE_USER_HOME="$PWD/.gradle-build"
 python3 tool/prepare_android.py
 flutter pub get
 flutter analyze
