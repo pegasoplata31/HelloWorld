@@ -1,0 +1,8 @@
+.dart_tool/
+.flutter-plugins*
+build/
+android/
+*.jks
+*.keystore
+key.properties
+Guante-De-Voz-App/assets/logo.png
